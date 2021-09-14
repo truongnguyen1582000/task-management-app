@@ -4,18 +4,12 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ pageName }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-avatar v-bind="attrs" v-on="on" color="primary" size="40"
-            >T</v-avatar
-          >
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title><v-btn>Logout</v-btn></v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <div>
+        <v-btn v-if="userId === ''" link :to="{ name: 'Auth' }" text
+          >Login</v-btn
+        >
+        <v-btn v-else @click="handleLogout" text>Logout</v-btn>
+      </div>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute bottom temporary>
       <v-list nav dense>
@@ -45,12 +39,26 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data: () => ({
     drawer: false,
     group: null,
     pageName: "",
   }),
+  computed: {
+    ...mapGetters({
+      userId: "user/userId",
+    }),
+  },
+
+  methods: {
+    ...mapActions("user", ["logout"]),
+    handleLogout() {
+      this.logout();
+    },
+  },
 
   watch: {
     group() {
