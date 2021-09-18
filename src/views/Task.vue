@@ -10,11 +10,27 @@
 <script>
 import TaskList from "../components/TaskList.vue";
 import TaskForm from "../components/TaskForm.vue";
-import { useLoadTask } from "../configs/firebase";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
       tasks: [],
+    };
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "user/info",
+    }),
+  },
+
+  methods: {
+    ...mapActions("user", ["setStatus", "removeTask", "handleTaskClick"]),
+  },
+  provide() {
+    return {
+      handleTaskClick: this.handleTaskClick,
+      setStatus: this.setStatus,
+      removeTask: this.removeTask,
     };
   },
 
@@ -23,15 +39,15 @@ export default {
     TaskForm,
   },
 
-  async mounted() {
-    const response = await useLoadTask(localStorage.getItem("userId"));
-    this.tasks = response.tasks;
+  watch: {
+    userInfo() {
+      this.tasks = this.userInfo.tasks;
+    },
   },
 
-  async beforeUpdate() {
-    if (localStorage.getItem("userId")) {
-      const response = await useLoadTask(localStorage.getItem("userId"));
-      this.tasks = response.tasks;
+  mounted() {
+    if (this.userInfo?.id) {
+      this.tasks = this.userInfo.tasks;
     }
   },
 };

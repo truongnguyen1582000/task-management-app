@@ -14,12 +14,7 @@ const routes = [
     name: "Auth",
     component: () => import("../views/Auth"),
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    meta: { needsAuth: true },
-    component: () => import("../views/Profile"),
-  },
+
   {
     path: "/task",
     name: "Task",
@@ -31,6 +26,19 @@ const routes = [
     name: "User",
     meta: { needsAuth: true },
     component: () => import("../views/User"),
+    beforeEnter: (to, from, next) => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if (userInfo.role === "admin") {
+        return next();
+      }
+      next(false);
+    },
+  },
+  {
+    path: "/my-profile",
+    name: "My profile",
+    meta: { needsAuth: true },
+    component: () => import("../views/MyProfile.vue"),
   },
 ];
 
@@ -39,9 +47,10 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function(to, from, next) {
-  const userId = localStorage.getItem("userId");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   if (to.meta.needsAuth) {
-    if (userId === "") {
+    if (!userInfo?.username) {
       next({ name: "Auth" });
     } else {
       next();

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex">
     <keep-alive>
       <component :is="component"></component>
     </keep-alive>
@@ -22,7 +22,6 @@ export default {
   methods: {
     changeComponent(cpn) {
       this.component = cpn;
-      console.log("cpn");
     },
   },
   provide() {

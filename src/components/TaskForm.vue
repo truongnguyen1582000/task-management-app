@@ -16,8 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { addNewTask } from "../configs/firebase";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -26,22 +25,23 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userId: "user/userId",
+      userInfo: "user/info",
     }),
   },
 
   methods: {
-    async handleFormSubmit() {
-      try {
-        await addNewTask(this.userId, {
-          id: new Date().toISOString(),
-          title: this.value,
-          isCompleted: false,
-        });
+    ...mapActions("user", ["addNewTask"]),
+    handleFormSubmit() {
+      if (this.value.trim() === "") {
         this.value = "";
-      } catch (err) {
-        console.log(err);
+        return;
       }
+      this.addNewTask({
+        id: new Date().toISOString(),
+        title: this.value,
+        isCompleted: false,
+      });
+      this.value = "";
     },
   },
 };

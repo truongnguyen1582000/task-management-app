@@ -2,15 +2,13 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBc6pOtcH2bPtMvntFpKE3KD6eIFX_-VGw",
-  authDomain: "vue-final-project-70997.firebaseapp.com",
-  databaseURL:
-    "https://vue-final-project-70997-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "vue-final-project-70997",
-  storageBucket: "vue-final-project-70997.appspot.com",
-  messagingSenderId: "877149128655",
-  appId: "1:877149128655:web:da76abbb1bea770a00b4ba",
-  measurementId: "G-XV4YPHHGTK",
+  apiKey: "AIzaSyAu7f885mShDGtjGND1brN7LtCLirdv-jo",
+  authDomain: "vue-project-50f62.firebaseapp.com",
+  projectId: "vue-project-50f62",
+  storageBucket: "vue-project-50f62.appspot.com",
+  messagingSenderId: "989059856907",
+  appId: "1:989059856907:web:428b8a60c31411b39d250e",
+  measurementId: "G-07NRP72SBH",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -57,7 +55,20 @@ export const validationLogin = async (username, password) => {
       return false;
     }
   }
-  return data[userIdx].id;
+  return data[userIdx];
+};
+
+export const getUserData = async (id) => {
+  const response = await usersCollection.get();
+  const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const userIdx = data.findIndex((user) => user.id === id);
+  return data[userIdx];
+};
+
+export const getAllUserData = async () => {
+  const response = await usersCollection.get();
+  const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return data;
 };
 
 // task queries
@@ -71,5 +82,11 @@ export const useLoadTask = async (id) => {
 export const addNewTask = async (userId, newTask) => {
   await usersCollection.doc(userId).update({
     tasks: firebase.firestore.FieldValue.arrayUnion(newTask),
+  });
+};
+
+export const updateTask = async (userId, tasks) => {
+  await usersCollection.doc(userId).update({
+    tasks: [...tasks],
   });
 };
