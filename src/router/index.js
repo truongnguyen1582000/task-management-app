@@ -34,6 +34,7 @@ const routes = [
         props: true,
       },
     ],
+
     beforeEnter: (to, from, next) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userInfo.role === "admin") {

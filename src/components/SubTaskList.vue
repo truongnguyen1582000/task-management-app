@@ -42,4 +42,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.completed {
+  background-color: rgba(0, 128, 0, 0.555);
+
+  .task-title {
+    text-decoration: line-through;
+  }
+}
+
+.p-0 {
+  padding: 0;
+}
 </style>

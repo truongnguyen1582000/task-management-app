@@ -1,9 +1,11 @@
 <template>
-  <div class="d-flex">
-    <keep-alive>
-      <component :is="component"></component>
-    </keep-alive>
-  </div>
+  <v-app class="container">
+    <v-container class="d-flex">
+      <keep-alive>
+        <component :is="component"></component>
+      </keep-alive>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -33,4 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  height: 550px;
+}
 </style>
