@@ -51,7 +51,7 @@
     </v-navigation-drawer>
     <div class="text-center ma-2">
       <v-snackbar v-model="snackbar">
-        You have not auth to come this part !
+        You have not permission to come this part !
         <template v-slot:action="{ attrs }">
           <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
             Close

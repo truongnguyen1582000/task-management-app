@@ -4,6 +4,7 @@
     <v-container>
       <router-view></router-view>
     </v-container>
+    <Footer />
   </v-app>
 </template>
 
@@ -11,6 +12,7 @@
 </style>
 
 <script>
+import Footer from "./components/Footer.vue";
 import Navbar from "./components/Navbar.vue";
 export default {
   data() {
@@ -18,6 +20,7 @@ export default {
   },
   components: {
     Navbar,
+    Footer,
   },
 };
 </script>
