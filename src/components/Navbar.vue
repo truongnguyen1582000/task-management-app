@@ -43,8 +43,8 @@
             <v-list-item-title>Task</v-list-item-title>
           </v-list-item>
 
-          <v-list-item :to="{ name: 'User' }" link @click="handleSnackbar">
-            <v-list-item-title>User</v-list-item-title>
+          <v-list-item :to="{ name: 'Profiles' }" link @click="handleSnackbar">
+            <v-list-item-title>Profiles</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -78,7 +78,7 @@ export default {
       userInfo: "user/info",
     }),
     userName() {
-      return this.userInfo?.username;
+      return this.userInfo?.fullname?.split(" ").slice(-1).join("");
     },
   },
 

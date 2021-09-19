@@ -22,10 +22,18 @@ const routes = [
     component: () => import("../views/Task"),
   },
   {
-    path: "/user",
-    name: "User",
+    path: "/profiles",
+    name: "Profiles",
     meta: { needsAuth: true },
-    component: () => import("../views/User"),
+    component: () => import("../views/Profiles"),
+    children: [
+      {
+        path: ":profileId",
+        name: "Profile",
+        component: () => import("../views/ProfileDetail"),
+        props: true,
+      },
+    ],
     beforeEnter: (to, from, next) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userInfo.role === "admin") {

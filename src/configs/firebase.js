@@ -65,10 +65,11 @@ export const getUserData = async (id) => {
   return data[userIdx];
 };
 
-export const getAllUserData = async () => {
+export const getAllProfileData = async () => {
   const response = await usersCollection.get();
   const data = response.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  return data;
+  const filteredData = data.filter((profile) => profile.role !== "admin");
+  return filteredData;
 };
 
 // task queries

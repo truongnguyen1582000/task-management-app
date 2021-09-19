@@ -19,6 +19,19 @@
 
           <validation-provider
             v-slot="{ errors }"
+            name="Fullname"
+            rules="required|min:3"
+          >
+            <v-text-field
+              v-model="fullname"
+              :error-messages="errors"
+              label="Full name"
+              required
+            ></v-text-field>
+          </validation-provider>
+
+          <validation-provider
+            v-slot="{ errors }"
             name="Password"
             rules="required|min:6"
           >
@@ -83,6 +96,7 @@ export default {
   data: () => ({
     username: "",
     password: "",
+    fullname: "",
   }),
 
   methods: {
@@ -92,6 +106,7 @@ export default {
         await createUser({
           username: this.username,
           password: this.password,
+          fullname: this.fullname,
           tasks: [],
           role: "employee",
         });

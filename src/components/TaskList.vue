@@ -36,9 +36,6 @@
 export default {
   inject: ["setStatus", "removeTask"],
   props: ["tasks"],
-  data() {
-    return {};
-  },
 };
 </script>
 
